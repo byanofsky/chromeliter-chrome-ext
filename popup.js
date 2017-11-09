@@ -121,6 +121,31 @@ function getSelection(url) {
   }, (result) => saveSelection(result, url));
 }
 
+function addTextToStore() {
+  const textSelectionsNode = document.querySelector('#text-selections');
+  console.log('Updating after adding new');
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, {type: "addTextSelection"}, function(result) {
+      console.log('Updating after adding new');
+      textSelectionsNode.innerHTML = result;
+    });
+  });
+}
+
+function handleDOMLoad() {
+  const addTextButton = document.querySelector('#add-text-button');
+  const textSelectionsNode = document.querySelector('#text-selections');
+
+  addTextButton.addEventListener('click', addTextToStore);
+
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, {type: "getTextSelections"}, function(result) {
+      console.log('send message')
+      textSelectionsNode.innerHTML = result;
+    });
+  });
+}
+
 // This extension loads the saved background color for the current tab if one
 // exists. The user can select a new background color from the dropdown for the
 // current page, and it will be saved as part of the extension's isolated
@@ -129,35 +154,8 @@ function getSelection(url) {
 // to a document's origin. Also, using chrome.storage.sync instead of
 // chrome.storage.local allows the extension data to be synced across multiple
 // user devices.
-document.addEventListener('DOMContentLoaded', () => {
-  getCurrentTabUrl((url) => {
-    // var dropdown = document.getElementById('dropdown');
+document.addEventListener('DOMContentLoaded', handleDOMLoad);
 
-    // Load the saved background color for this page and modify the dropdown
-    // value, if needed.
-    // getSavedBackgroundColor(url, (savedColor) => {
-    //   if (savedColor) {
-    //     changeBackgroundColor(savedColor);
-    //     dropdown.value = savedColor;
-    //   }
-    // });
-
-    // Ensure the background color is changed and saved when the dropdown
-    // selection changes.
-    // dropdown.addEventListener('change', () => {
-    //   changeBackgroundColor(dropdown.value);
-    //   saveBackgroundColor(url, dropdown.value);
-    // });
-
-    // getSelection(url);
-  });
-});
-// Listen for messages from the popup
-chrome.runtime.onMessage.addListener(function (msg, sender, response) {
-  // First, validate the message's structure
-  // if ((msg.from === 'background')) {
-    // Directly respond to the sender (popup),
-    // through the specified callback */
-    response('Received at popup from background');
-  // }
-});
+// document.addEventListener('beforeunload', () => {
+//   document.removeEventListener('DOMContentLoaded', textSelector);
+// });
