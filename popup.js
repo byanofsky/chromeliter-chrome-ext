@@ -132,11 +132,23 @@ function addTextToStore() {
   });
 }
 
+function clearText() {
+  const textSelectionsNode = document.querySelector('#text-selections');
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, {type: "clearText"}, function(result) {
+      console.log('Clearing text');
+      textSelectionsNode.innerHTML = '';
+    });
+  });
+}
+
 function handleDOMLoad() {
   const addTextButton = document.querySelector('#add-text-button');
+  const clearTextButton = document.querySelector('#clear-text-button');
   const textSelectionsNode = document.querySelector('#text-selections');
 
   addTextButton.addEventListener('click', addTextToStore);
+  clearTextButton.addEventListener('click', clearText);
 
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     chrome.tabs.sendMessage(tabs[0].id, {type: "getTextSelections"}, function(result) {

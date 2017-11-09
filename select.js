@@ -1,5 +1,6 @@
-const textSelections = [];
+let textSelections = [];
 chrome.storage.local.get('chromeliter', (items) => {
+  console.log(items);
   const itemsArr = JSON.parse(items.chromeliter);
   itemsArr.forEach(text => textSelections.push(text));
 });
@@ -14,9 +15,17 @@ function addTextSelection() {
   chrome.storage.local.get('chromeliter', (items) => console.log(items));
 };
 
+function clearTextSelection() {
+  textSelections = [];
+  chrome.storage.local.set({ chromeliter: JSON.stringify(textSelections) });
+}
+
 chrome.runtime.onMessage.addListener(
   function(message, sender, sendResponse) {
-    if (message.type === 'addTextSelection') {
+    if (message.type === 'clearText') {
+      clearTextSelection();
+    }
+    else if (message.type === 'addTextSelection') {
       addTextSelection();
     };
     console.log('Sending response:', formatTextSelections());
