@@ -161,3 +161,15 @@ chrome.runtime.onMessage.addListener(function (msg, sender, response) {
     response('Received at popup from background');
   // }
 });
+
+
+document.querySelector('#btnPrint').addEventListener('click', function(){
+  var divContents = document.querySelector("#dvContainer").innerHTML;
+  var printWindow = window.open('', '', 'height=400,width=800');
+      printWindow.document.write('<html><head><title>DIV Contents</title>');
+      printWindow.document.write('</head><body >');
+      printWindow.document.write(divContents);
+      printWindow.document.write('</body></html>');
+      printWindow.document.close();
+      printWindow.print();
+})
