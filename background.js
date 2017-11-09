@@ -7,3 +7,5 @@ chrome.runtime.onMessage.addListener(function (msg, sender, response) {
     chrome.runtime.sendMessage({ from: 'background', subject: 'Text' }, (response) => console.log(response));
   }
 });
+
+

@@ -1,7 +1,7 @@
-<!doctype html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <title>Chromeliter Popup</title>
+
     <style type="text/css">
       body {
         margin: 10px;
@@ -30,7 +30,6 @@
       -
       - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
     -->
-    <script src="popup.js"></script>
   </head>
 
   <body>
@@ -38,8 +37,13 @@
     <div id="container">
       <button id="add-text-button">Add Text</button>
       <button id="clear-text-button">Clear Text</button>
-      <div id="text-selections">
-      </div>
+      <form id="form1">
+        <div id="text-selections">
+        </div>
+        <input type="button" value="MAKE PDF/Print" id="btnPrint" />
+      </form>
     </div>
+
+    <script src="popup.js"></script>
   </body>
 </html>
