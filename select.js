@@ -1,4 +1,8 @@
 const textSelections = [];
+chrome.storage.local.get('chromeliter', (items) => {
+  const itemsArr = JSON.parse(items.chromeliter);
+  itemsArr.forEach(text => textSelections.push(text));
+});
 
 function addTextSelection() {
   const selObj = window.getSelection();
@@ -6,6 +10,8 @@ function addTextSelection() {
   let selRange = selObj.getRangeAt(0);
   let result = selObj.toString();
   textSelections.push(result);
+  chrome.storage.local.set({ chromeliter: JSON.stringify(textSelections) });
+  chrome.storage.local.get('chromeliter', (items) => console.log(items));
 };
 
 chrome.runtime.onMessage.addListener(
