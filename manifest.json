@@ -4,7 +4,16 @@
   "name": "Chromeliter",
   "description": "Highlight text in your webpage and export as a PDF",
   "version": "0.0.1",
-
+  "background": {
+    "persistent": false,
+    "scripts": ["background.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["select.js"]
+    }
+  ],
   "browser_action": {
     "default_icon": "icon.png",
     "default_popup": "popup.html"

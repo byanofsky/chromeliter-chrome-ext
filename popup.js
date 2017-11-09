@@ -99,11 +99,11 @@ function saveBackgroundColor(url, color) {
 
 function saveSelection(selToSave, url) {
   // Save it using the Chrome extension storage API.
-  chrome.storage.sync.set({'value': url}, function() {
+  console.log(selToSave);
+  chrome.storage.sync.set({'value': selToSave}, function() {
     // Notify that we saved.
-    message('Settings saved', url);
+    console.log('Settings saved', url);
   });
-  // console.log(selToSave)
   // text.push(selToSave);
   // var items = {};
   // items[url] = selToSave;
@@ -131,7 +131,7 @@ function getSelection(url) {
 // user devices.
 document.addEventListener('DOMContentLoaded', () => {
   getCurrentTabUrl((url) => {
-    var dropdown = document.getElementById('dropdown');
+    // var dropdown = document.getElementById('dropdown');
 
     // Load the saved background color for this page and modify the dropdown
     // value, if needed.
@@ -149,6 +149,15 @@ document.addEventListener('DOMContentLoaded', () => {
     //   saveBackgroundColor(url, dropdown.value);
     // });
 
-    getSelection(url);
+    // getSelection(url);
   });
+});
+// Listen for messages from the popup
+chrome.runtime.onMessage.addListener(function (msg, sender, response) {
+  // First, validate the message's structure
+  // if ((msg.from === 'background')) {
+    // Directly respond to the sender (popup),
+    // through the specified callback */
+    response('Received at popup from background');
+  // }
 });
