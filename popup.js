@@ -97,32 +97,28 @@ function saveBackgroundColor(url, color) {
   chrome.storage.sync.set(items);
 }
 
-function saveSelection(selToSave) {
-  text.push(selToSave);
-  var items = {};
-  items[url] = text;
-  chrome.storage.sync.set(items);
+function saveSelection(selToSave, url) {
+  // Save it using the Chrome extension storage API.
+  chrome.storage.sync.set({'value': url}, function() {
+    // Notify that we saved.
+    message('Settings saved', url);
+  });
+  // console.log(selToSave)
+  // text.push(selToSave);
+  // var items = {};
+  // items[url] = selToSave;
+  // chrome.storage.sync.set(items);
 }
 
-function getSelection() {
-  var script = `document.body.addEventListener('mouseup', () => {
-    const selObj = window.getSelection();
-    let selRange = selObj.getRangeAt(0);
-    console.dir(selObj, selRange);
-    console.log(selObj.toString());
-    // const highlight = document.createElement('span');
-    // highlight.style.backgroundColor = 'yellow';
-    // selRange.surroundContents(highlight);
-    saveSelection(selObj.toString());
-  })`;
+function getSelection(url) {
   // See https://developer.chrome.com/extensions/tabs#method-executeScript.
   // chrome.tabs.executeScript allows us to programmatically inject JavaScript
   // into a page. Since we omit the optional first argument "tabId", the script
   // is inserted into the active tab of the current window, which serves as the
   // default.
   chrome.tabs.executeScript({
-    code: script
-  });
+    file: 'select.js'
+  }, (result) => saveSelection(result, url));
 }
 
 // This extension loads the saved background color for the current tab if one
@@ -153,6 +149,6 @@ document.addEventListener('DOMContentLoaded', () => {
     //   saveBackgroundColor(url, dropdown.value);
     // });
 
-    getSelection()
+    getSelection(url);
   });
 });
