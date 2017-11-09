@@ -1,27 +1,75 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title>Chromeliter Popup</title>
+    <title>Chromeliter</title>
 
     <style type="text/css">
       body {
-        margin: 10px;
+        margin: 15px;
         min-height: 300px;
         width: 500px;
+        padding-left: 10px;
         /*white-space: nowrap;*/
       }
 
       h1 {
-        font-size: 15px;
+        font-size: 20px;
+        display: inline;
+        margin-right: 10px;
       }
 
+      #pink{
+        color: rgb(244, 131, 151);
+      }
+
+      #blue{
+        color: rgb(52, 105, 220);
+      }
+
+      #green {
+        color: rgb(8, 215, 8);
+      }
+
+      #yellow{
+        color: rgb(247, 199, 9);
+      }
+
+      #orange{
+        color:rgba(230, 146, 2, 0.906);
+      }
       #container {
         /*align-items: center;
         display: flex;
         justify-content: space-between;*/
+        float:left;
+        overflow-y: auto;
+        height: 300px;
+      }
+
+      button{
+        height: 35px;
+        width: 70px;
+        font-size: 11px;
+        margin-left: 10px;
       }
 
       #add-text-button {
         flex: none;
+        background-color: rgb(183, 242, 163);
+      }
+
+      #clear-text-button{
+        background-color: rgb(237, 146, 146);
+        margin-left: 100px;
+      }
+
+      #btnPrint{
+        height: 35px;
+        width: 70px;
+        font-size: 11px;
+        position: absolute;
+        top: 15px;
+        right: 30px;
+
       }
     </style>
 
@@ -34,13 +82,16 @@
   </head>
 
   <body>
-    <h1>Chromeliter Popup</h1>
+    <h1><span id="pink">C</span><span id="yellow">h</span><span id="green">r</span><span id="blue">o</span><span id="orange">m</span><span id="green">e</span><span id="pink">L</span><span id="yellow">i</span><span id="blue">g</span><span id="pink">h</span><span id="green">t</span><span id="pink">e</span><span id="orange">r</span></h1>
+
+    <button id="add-text-button">Add Text</button>
+    <button id="clear-text-button">Clear Text</button>
+
+    <form id="form1">
+      <button type="button" value="PDF/Print" id="btnPrint">PDF/Print</button>
+    </form>
+
     <div id="container">
-      <button id="add-text-button">Add Text</button>
-      <button id="clear-text-button">Clear Text</button>
-      <form id="form1">
-        <input type="button" value="MAKE PDF/Print" id="btnPrint" />
-      </form>
       <div id="text-selections">
       </div>
     </div>
