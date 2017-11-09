@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+const text = [];
+
 /**
  * Get the current URL.
  *
@@ -95,14 +97,23 @@ function saveBackgroundColor(url, color) {
   chrome.storage.sync.set(items);
 }
 
+function saveSelection(selToSave) {
+  text.push(selToSave);
+  var items = {};
+  items[url] = text;
+  chrome.storage.sync.set(items);
+}
+
 function getSelection() {
   var script = `document.body.addEventListener('mouseup', () => {
     const selObj = window.getSelection();
     let selRange = selObj.getRangeAt(0);
     console.dir(selObj, selRange);
-    const highlight = document.createElement('span');
-    highlight.style.backgroundColor = 'yellow';
-    selRange.surroundContents(highlight);
+    console.log(selObj.toString());
+    // const highlight = document.createElement('span');
+    // highlight.style.backgroundColor = 'yellow';
+    // selRange.surroundContents(highlight);
+    saveSelection(selObj.toString());
   })`;
   // See https://developer.chrome.com/extensions/tabs#method-executeScript.
   // chrome.tabs.executeScript allows us to programmatically inject JavaScript
