@@ -160,7 +160,7 @@ function handleDOMLoad() {
   document.querySelector('#btnPrint').addEventListener('click', function(){
     var divContents = document.querySelector("#text-selections").innerHTML;
     var printWindow = window.open('', '', 'height=400,width=800');
-        printWindow.document.write('<html><head><title>DIV Contents</title>');
+        printWindow.document.write('<html><head><title>ChromeLighter</title>');
         printWindow.document.write('</head><body >');
         printWindow.document.write(divContents);
         printWindow.document.write('</body></html>');
